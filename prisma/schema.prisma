@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id       String @id @default(cuid())
+  email    String
+  password String
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+}
+
+model Perusahaan {
+  id              String      @id @default(cuid())
+  nama_perusahaan String
+  lost_kargo      LostKargo[]
+  alat_berat      AlatBerat[]
+  kontainer       Kontainer[]
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+}
+
+model LostKargo {
+  id                         String      @id @default(cuid())
+  no_nota                    String
+  lokasi_penumpukan          String
+  perusahaan_id              String?
+  Perusahaan                 Perusahaan? @relation(fields: [perusahaan_id], references: [id])
+  tanggal_mulai_penumpukan   DateTime
+  tanggal_selesai_penumpukan DateTime
+  jenis_barang               String
+  satuan                     Int
+  jumlah_uang                Int
+  status_pembayaran          Boolean
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+}
+
+model AlatBerat {
+  id                         String      @id @default(cuid())
+  no_nota                    String
+  perusahaan_id              String?
+  Perusahaan                 Perusahaan? @relation(fields: [perusahaan_id], references: [id])
+  tanggal_mulai_penumpukan   DateTime
+  tanggal_selesai_penumpukan DateTime
+  jenis_barang               String
+  satuan                     Int
+  jumlah_uang                Int
+  status_pembayaran          Boolean
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
+}
+
+model Kontainer {
+  id                 String         @id @default(cuid())
+  no_nota            String
+  ukuran_kontainer   String
+  hari               Int
+  perusahaan_id      String?
+  Perusahaan         Perusahaan?    @relation(fields: [perusahaan_id], references: [id])
+  jumlah_uang        Int
+  status_pembayaran  Boolean
+  jenis_kontainer    String
+  tanggal_mulai_m1   DateTime
+  tanggal_selesai_m1 DateTime
+  tanggal_mulai_m2   DateTime
+  tanggal_selesai_m2 DateTime
+  lo                 Int
+  kontainer_id       String?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+}
+
