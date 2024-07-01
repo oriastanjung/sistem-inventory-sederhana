@@ -79,15 +79,34 @@ function EditKontainerForm({ perusahaan_data, defaultData }) {
         onChange={handleChange}
         isRequired={true}
       />
-      <InputWithLabel
-        label="Ukuran Kontainer"
-        type="text"
-        id="ukuran_kontainer"
-        name="ukuran_kontainer"
-        value={form.ukuran_kontainer}
-        onChange={handleChange}
-        isRequired={true}
-      />
+      <div className="flex flex-col gap-2 mb-4">
+        <label className="text-lg font-medium" htmlFor="ukuran_kontainer">
+          Ukuran Kontainer
+        </label>
+        <select
+          className="rounded-lg px-3 py-2"
+          id="ukuran_kontainer"
+          name="ukuran_kontainer"
+          value={form.ukuran_kontainer}
+          onChange={handleChange}
+          defaultValue={"20 ISI"}
+          required
+        >
+            <option value={"20 ISI"}>
+              20 Isi
+            </option>
+            <option value={"40 ISI"}>
+              40 Isi
+            </option>
+            <option value={"20 KOSONG"}>
+              20 Kosong
+            </option>
+            <option value={"40 KOSONG"}>
+              40 Kosong
+            </option>
+          
+        </select>
+      </div>
       <InputWithLabel
         label="Hari"
         type="number"
